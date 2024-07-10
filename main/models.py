@@ -5,16 +5,9 @@ from django.core.validators import MinValueValidator
 # Create your models here.
 
 class UserProfile(models.Model):
-    # usuarios= (('1', 'Arrendador'), ('2', 'Arrendatario'))
     user = models.OneToOneField(User, related_name = 'usuario', on_delete=models.CASCADE)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(max_length=255, null=True)   
-    # rut = models.CharField(max_length=9, primary_key=True)
-    # nombres = models.CharField(max_length=50)
-    # direccion = models.CharField(max_length=50)
-    # telefono_personal = models.IntegerField()
-    # correo_electronico = models.EmailField(unique=True)
-    # tipo_de_usuario = models.CharField(max_length=15, choices=usuarios)
     
 # class Region pendiente
 class Comuna(models.Model):
