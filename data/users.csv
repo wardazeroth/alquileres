@@ -1,0 +1,11 @@
+username;first_name;last_name;email;password;password_confirm;direccion
+12345678-9;Frodo;Baggins;fbaggins@mail.com;1234;1234;Bag End, Hobbiton
+23456789-0;Samwise;Gamgee;sgamgee@mail.com;1234;1234;3 Bagshot Row, Hobbiton
+34567890-1;Gandalf;Grey;ggrey@mail.com;1234;1234;Wizards' Vale, Isengard
+45678901-2;Aragorn;Elessar;aelessar@mail.com;1234;1234;The Citadel, Minas Tirith
+56789012-3;Legolas;Greenleaf;lgreenleaf@mail.com;1234;1234;Woodland Realm, Mirkwood
+67890123-4;Gimli;Gloin;ggloin@mail.com;1234;1234;Lonely Mountain, Erebor
+78901234-5;Boromir;Denethor;bdenethor@mail.com;1234;1234;Steward's House, Minas Tirith
+89012345-6;Galadriel;Galadriel;ggaladriel@mail.com;1234;1234;Caras Galadhon, Lothlórien
+90123456-7;Elrond;Half-elven;ehalf-elven@mail.com;1234;1234;Rivendell, Eriador
+01234567-8;Saruman;White;swhite@mail.com;1234;1234;Orthanc, Isengard
