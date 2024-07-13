@@ -1,6 +1,8 @@
 from main.models import Comuna, Inmueble, UserProfile
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
+from django.db.models import Q
+from django.db import connection
 
 def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario_rut):
     
@@ -82,3 +84,25 @@ def editar_user(rut, first_name, last_name, email, password, direccion, telefono
         telefono=telefono
     )
     return user
+
+def obtener_inmuebles_comunas(filtro):
+
+    if filtro is None:
+        return Inmueble.objects.all().order_by('comuna')
+    
+    #Si llegamos acá significa que SI HAY un filtro
+    return Inmueble.objects.filter(Q(nombre__icontains=filtro) | Q(descripcion__icontains=filtro)).order_by('comuna')
+        
+
+def obtener_inmuebles_regiones(filtro):
+    consulta = 'select * from main_inmueble as I join main_comuna as C on I.comuna_id = C.cod join main_region as R on C.region_id = R.cod order by R.cod'
+    if filtro is not None:
+        consulta = f"select * from main_inmueble as I join main_comuna as C on I.comuna_id = C.cod join main_region as R on C.region_id = R.cod where I.nombre like'%{filtro}%' or I.descripcion like '%{filtro}%' order by R.cod"
+        #return Inmueble.objects.raw(consulta)
+        cursor =connection.cursor()
+        cursor.execute(consulta)
+        registros = cursor.fetchall()
+        return registros
+
+
+    #return Inmueble.objects.filter(nombre__icontains=filtro).order_by('comuna')

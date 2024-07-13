@@ -13,12 +13,17 @@ class UserProfile(models.Model):
 class Region(models.Model):
     cod = models.CharField(max_length=2, primary_key=True)
     nombre = models.CharField(max_length=255)
+    
+    def __str__(self) -> str:
+        return f'{self.nombre}({self.cod})'
 
 class Comuna(models.Model):
     cod = models.CharField(max_length=5, primary_key = True)
     nombre = models.CharField(max_length=255)
     region = models.ForeignKey(Region, on_delete=models.RESTRICT,related_name= 'comunas')
     
+    def __str__(self) -> str:
+        return f'{self.nombre}({self.cod})'
     
 class Inmueble(models.Model):
     tipos = (('casa', 'Casa'), ('parcela', 'Parcela'), ('departamento', 'Departamento'))

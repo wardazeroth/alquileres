@@ -1,6 +1,5 @@
 import csv
 from django.core.management.base import BaseCommand
-from main.models import Comuna
 from main.services import crear_inmueble
 
 class Command(BaseCommand):
