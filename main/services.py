@@ -2,6 +2,7 @@ from main.models import Comuna, Inmueble, UserProfile
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from django.db.models import Q
+from django.contrib import messages
 from django.db import connection
 
 def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario_rut):
@@ -85,6 +86,20 @@ def editar_user(rut, first_name, last_name, email, password, direccion, telefono
     )
     return user
 
+def editar_user_sin_password(rut, first_name, last_name, email, direccion, telefono= None)->list[bool, str]:
+    user = User.objects.get(username=rut)
+    # Actualizar los campos del usuario utilizando update
+    User.objects.filter(username=rut).update(
+    first_name=first_name,
+    last_name=last_name,
+    email=email)
+        # Actualizar el perfil del usuario utilizando update
+    UserProfile.objects.filter(user=user).update(
+        direccion=direccion,
+        telefono=telefono
+    )
+    return user
+
 def obtener_inmuebles_comunas(filtro):
 
     if filtro is None:
@@ -103,6 +118,20 @@ def obtener_inmuebles_regiones(filtro):
         cursor.execute(consulta)
         registros = cursor.fetchall()
         return registros
+        #return Inmueble.objects.filter(nombre__icontains=filtro).order_by('comuna')
+        
+def change_pass(req, password, pass_repeat):
+    #2. Valido que ambas contraseñas coincidan
+    if password != pass_repeat:
+        messages.error(req, 'Las contraseñas no coinciden')
+        return
+    else:
+    #3. Actualizamos la contraseña
+        req.user.set_password(password)
+        req.user.save()
+        #4. Le avisamos al usuario que el cambio fue exitoso
+        messages.success(req, 'Contraseña actualizada')
+        
+        
 
-
-    #return Inmueble.objects.filter(nombre__icontains=filtro).order_by('comuna')
+    

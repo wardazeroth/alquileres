@@ -1,8 +1,8 @@
 {%extends 'base.html' %}
+
 {%block css%}
 <style>
-
-    input {
+  input {
     padding: 7px;
     width: 100%;
     margin-bottom: 12px;
@@ -13,56 +13,61 @@
     color: #333;
     display: flex;
 
-    }
-    form {
+  }
+
+  form {
     display: flex;
     flex-direction: column;
+  }
+
+
+  button:hover {
+    background-color: #2980b9;
   }
 
   p {
     text-align: center;
   }
 
-  a{
-    color: red;
+  a {
+    color:red;
     text-decoration: None;
-    font-size: 1.5rem
+    font-size: 1.5rem;
   }
-
 </style>
-
 {%endblock%}
-
 {%block content%}
 
-
 <div>
-    <h1 class="text-center" style="margin-top: 4rem;">Iniciar Sesión</h1>
+    <h1 class="text-center" style="margin-top: 4rem;">Registrarse</h1>
 </div>
 
 
 <div class="row" style="margin-top: 2rem;">
     <div class="col-4 d-inline-block mx-auto">
-        {% if form.errors %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>El nombre de usuario y/o la contraseña son incorrectos</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        {%endif%}
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'register' %}">
             {%csrf_token %}
             {{form}}
             <!-- <div class="mb-3">
+                
                 <label for="formGroupExampleInput" class="form-label text-center">Username</label>
                 <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Nombre" name = "{{form.username.name}}" required>
             </div>
             <div class="mb-3">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" placeholder="email" name="{{form.email.name}}" required>
+            </div>
                 <label for="exampleInputPassword1" class="form-label text-center">Password</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name = "{{form.password.name}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label text-center">Repita el Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="passRepeat" name = "{{form.passRepeat.name}}" required>
             </div> -->
-            <button type="submit" class="btn btn-primary" style = 'margin-top: 2rem;'>Iniciar Sesión</button>
+            <button type="submit" class="btn btn-primary" style = 'margin-top: 2rem;'>Regístrate</button>
         </form>
-        <p style="margin-top: 1rem; font-size: 1rem;">Si no tienes cuenta <a href="/accounts/register">crea una</a></p>
+        <p style="margin-top: 1rem; font-size: 1rem;">Si ya tienes una cuenta, <a href="/accounts/login">Accede</a></p>
     </div>
 </div>
 </div>
