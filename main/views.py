@@ -30,6 +30,7 @@ def edit_user(req):
             req.POST['last_name'],
             req.POST['email'],
             req.POST['direccion'],
+            req.POST['rol'],
             req.POST['telefono']
         )
     else:
@@ -38,7 +39,8 @@ def edit_user(req):
             req.POST['first_name'],
             req.POST['last_name'],
             req.POST['email'],
-            req.POST['direccion'])   
+            req.POST['direccion'],
+            req.POST['rol'])   
     messages.success(req, '¡Ha actualizado sus datos con éxito!')
     return redirect('/')
 

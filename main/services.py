@@ -86,7 +86,7 @@ def editar_user(rut, first_name, last_name, email, password, direccion, telefono
     )
     return user
 
-def editar_user_sin_password(rut, first_name, last_name, email, direccion, telefono= None)->list[bool, str]:
+def editar_user_sin_password(rut, first_name, last_name, email, direccion, rol, telefono= None)->list[bool, str]:
     user = User.objects.get(username=rut)
     # Actualizar los campos del usuario utilizando update
     User.objects.filter(username=rut).update(
@@ -96,7 +96,8 @@ def editar_user_sin_password(rut, first_name, last_name, email, direccion, telef
         # Actualizar el perfil del usuario utilizando update
     UserProfile.objects.filter(user=user).update(
         direccion=direccion,
-        telefono=telefono
+        telefono=telefono,
+        rol=rol
     )
     return user
 
