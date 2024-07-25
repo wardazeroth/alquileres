@@ -1,14 +1,124 @@
 {%extends 'base.html'%}
 
     {%block content%}
-        
         {%if user.is_authenticated %}
             <h1>Bienvenido, {{user.first_name}} {{user.last_name}}</h1>
-            <a href="{%url 'logout'%}">Logout</a>
-        {%else%}
-            <h1>Bienvenido, Cliente</h1>
-            <a href="{%url 'login'%}">Login</a>
-        {%endif%}
-    {%endblock%}
-</body>
-</html>
+            <div>
+                <h3 class="text-center" style="margin-top: 2rem;">
+                {%if user.usuario.rol == 'arrendador' %}
+                Tus Propiedades
+                {% elif user.usuario.rol == 'arrendatario' %}
+                Propiedades Solicitadas
+                {%else%}
+                Todas
+                {%endif%}    
+            </h3>
+            <div class="row">
+                <div class="col-4">
+                    <h3>Filtra las propiedades</h3>
+                    <form action="/" method="get">
+                        {% csrf_token%}
+                        <div class="mb-3">
+                            <label for="region_cod" class="form-label">Región</label>
+                            <select name="region_cod" id="region_cod" class="form-select">
+                                <option value="">Selecciona una región</option>
+                                {%for region in regiones%}
+                                    <option value="{{ region.cod }}">{{ region.nombre }}</option>
+                                {%endfor%}
+                                
+                            </select>
+
+                        <div class="mb-3">
+                            <label for="comuna_cod" class="form-label">Comuna</label>
+                            <select name="comuna_cod" id="comuna_cod" class="form-select">
+                                <option value="">Selecciona una comuna</option>
+                                {%for comuna in comunas%}
+                                    <option value="{{ comuna.cod }}">{{ comuna.nombre }}</option>
+                                {%endfor%}
+                            </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="palabra" class="form-label">Palabra</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="palabra"
+                            id="palabra"
+                        />
+                    </div>
+                    </div>
+                <input type="submit" value="Buscar" class="btn btn-success"> 
+                </form>                   
+            </div>
+            <div class="col-8">
+
+                {%for inmueble in inmuebles%}
+                <div class="card mt-3">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-8">
+                        <h5 class="card-title">{{ inmueble.nombre }}</h5>
+                        <p class="card-text">{{ inmueble.descripcion }}</p>
+                      </div>
+                      <div class="col-4">
+                        <a href="{{ inmueble.id}} " class="btn btn-primary">Ver detalle</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {%endfor%}
+                
+              </div>
+            </div>
+        </div>
+ 
+    {%endif%}
+ 
+{% endblock %}
+{%block js%}
+<script>
+    setTimeout(function () {
+        $('.fade').fadeOut(1000);
+    }, 3000);
+</script>
+<script>
+    function loadContent(event, url) {
+        event.preventDefault();
+        fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            // Crear un contenedor temporal para manipular el HTML cargado
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data;
+            // Extraer el contenido del div con id 'main-content' del HTML cargado
+            const newContent = tempDiv.querySelector('#profile-section').innerHTML;
+            // Reemplazar el contenido actual del div 'profile-section' en la página
+            document.getElementById('profile-section').innerHTML = newContent;
+            // Desplazar suavemente hacia el contenido recién cargado
+            document.querySelector('#profile-section').scrollIntoView({ behavior: 'smooth' });
+            // Añadir event listeners a enlaces internos dentro del nuevo contenido
+            addLinkEventListeners();
+        });
+    }
+
+    function addLinkEventListeners() {
+// Seleccionar todos los enlaces dentro del #profile-section
+        const links = document.querySelectorAll('#profile-section a');
+        links.forEach(link => {
+            link.addEventListener('click', function(event) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('/')) { // Solo manejar enlaces internos
+                    loadContent(event, href);
+                }
+            });
+        });
+        }
+
+        // Añadir event listeners a los enlaces iniciales
+        document.addEventListener('DOMContentLoaded', addLinkEventListeners);
+</script>
+{%endblock%}
+
+
+

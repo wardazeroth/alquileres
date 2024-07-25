@@ -7,15 +7,58 @@ from django.shortcuts import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from main.services import editar_user_sin_password, change_pass
+from main.models import Comuna, Region, Inmueble
 
 # Create your views here.
 @login_required
 def indexView(req):
-    return render(req, 'index.html')
+    datos= req.GET
+    region_cod = datos.get('region_cod', '')
+    comuna_cod = datos.get('comuna_cod', '')
+    palabra = datos.get('palabra', '')
+    user = req.user
+    inmuebles = filtrar_inmuebles(region_cod, comuna_cod, palabra)
+    comunas= Comuna.objects.all()
+    regiones = Region.objects.all()
+    context = {
+        'comunas': comunas,
+        'regiones': regiones,
+        'inmuebles': inmuebles
+    }
+    return render(req, 'index.html', context)
+
+def filtrar_inmuebles(region_cod, comuna_cod, palabra):
+    
+    #Caso 1: comuna_cod != ''
+    if comuna_cod != '':
+        comuna = Comuna.objects.get(cod=comuna_cod)
+        return Inmueble.objects.filter(comuna=comuna)
+    #Caso 2: comuna_cod == '' and region_cod != ''
+    elif comuna_cod == '' and region_cod != '':
+        region = Region.objects.get(cod=region_cod)
+        comunas = Comuna.objects.filter(region=region)
+        return Inmueble.objects.filter(comuna__in=comunas)
+    #Caso 3: comuna_cod == '' and region_cod == ''
+    else:
+    
+    
+        inmuebles = Inmueble.objects.all()
+        return inmuebles
 
 @login_required
 def profile(req):
-    return render(req, 'profile.html')
+    user = req.user
+    mis_inmuebles= None
+    if user.usuario.rol == 'arrendador':
+        mis_inmuebles= user.inmuebles.all()
+    elif user.usuario.rol == 'arrendatario':
+        pass
+    
+    context = {
+        'mis_inmuebles': mis_inmuebles
+    }
+        
+    return render(req, 'profile.html', context)
 
 @login_required
 def edit_user(req):
@@ -51,7 +94,6 @@ def change_password(req):
     change_pass(req, password, pass_repeat)
     return redirect('/accounts/profile')
     
-
 def register(req):
     form = RegisterForm()
     context = {'form': form}

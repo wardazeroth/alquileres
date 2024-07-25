@@ -23,11 +23,11 @@ def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales_terreno, cant
                   comuna=comuna,
                   propietario=propietario)
 
-def editar_inmueble(inmueble_id, nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna, propietario):
+def editar_inmueble(inmueble_id, nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario):
     propietario = User.objects.get(username=propietario)
-    comuna=Comuna.objects.get(nombre=comuna)
+    comuna=Comuna.objects.get(cod=comuna_cod)
     inmueble = Inmueble.objects.get(id=inmueble_id)
-    inmueble.nombre=nombre,
+    inmueble.nombre=nombre
     inmueble.descripcion=descripcion
     inmueble.m2_construidos=m2_construidos
     inmueble.m2_totales_terreno=m2_totales_terreno

@@ -3174,7 +3174,7 @@ input, select, textarea {
 		/* Header */
 
 			#header {
-				background-image: url("images/top-1280.svg"), url("images/overlay.png"), url("../../images/renta-casas.jpg");
+				background-image: url("images/top-1280.svg"), url("../../images/renta-casas.jpg");
 				background-size: 1280px 184px,						auto,							cover;
 				padding: 3em 0 7em 0;
 			}

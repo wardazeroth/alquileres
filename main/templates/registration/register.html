@@ -38,13 +38,11 @@
 {%endblock%}
 {%block content%}
 
-<div>
-    <h1 class="text-center" style="margin-top: 4rem;">Registrarse</h1>
-</div>
-
-
-<div class="row" style="margin-top: 2rem;">
+<div class="row">
     <div class="col-4 d-inline-block mx-auto">
+      <div>
+        <h1 class="text-center">Registrarse</h1>
+    </div>
         <form method="post" action="{% url 'register' %}">
             {%csrf_token %}
             {{form}}
@@ -65,10 +63,13 @@
                 <label for="exampleInputPassword1" class="form-label text-center">Repita el Password</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="passRepeat" name = "{{form.passRepeat.name}}" required>
             </div> -->
-            <button type="submit" class="btn btn-primary" style = 'margin-top: 2rem;'>Regístrate</button>
-        </form>
-        <p style="margin-top: 1rem; font-size: 1rem;">Si ya tienes una cuenta, <a href="/accounts/login">Accede</a></p>
+              <button type="submit" class="btn btn-primary" style = 'margin-top: 2rem;'>Regístrate</button>
+          </form>
+          <p style="margin-top: 1rem; font-size: 1rem;">Si ya tienes una cuenta, <a href="/accounts/login">Accede</a></p>
     </div>
-</div>
+
+  <div class="col-6">
+
+  </div>
 </div>
 {%endblock%}

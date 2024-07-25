@@ -1,0 +1,44 @@
+{%extends 'base.html' %}
+
+{%block css%}
+<style>
+    h1 {
+        margin-top: 2rem;
+        color: rgb(255, 255, 255);
+    }
+
+    h2{
+        margin-top: 5rem;
+        font-size: 1.5rem;
+        text-align:justify;
+    }
+</style>
+{%endblock%}
+{%block content%}
+  {%if inmueble_hallado != None %}
+    <h1 class="text-center text-black" >{{inmueble_hallado.nombre}}</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">             
+            <div style="width: 28rem; margin-top: 5rem;">
+                <img src="" class="card-img-top" alt="...">
+            </div>
+        </div>
+        <div class="col-6">
+            
+            <ul>
+                <li class="list-group-item">
+                    <h2>{{inmueble_hallado.descripcion}}</h2>                
+                </li>
+                <li class="list-group-item mt-3">
+                    <h2>${{inmueble_hallado.precio}}</h2>                
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</div>
+  {% endif %}
+{%endblock%}
+
+
