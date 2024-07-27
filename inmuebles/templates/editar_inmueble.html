@@ -5,7 +5,7 @@
     <form action="{% url 'editar_inmueble' id=inmueble.id %}" method="post">
         {% csrf_token %}
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre:</label>
                     <input type="text" class="form-control" id="nombre" required placeholder="nombre de la propiedad" name="nombre" value="{{inmueble.nombre}}">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Cantidad de Estacionamientos</label>
                     <input min="0" name="cantidad_estacionamientos" type="number" class="form-control" id="cantidad_estacionamientos" required placeholder="cantidad de estacionamientos" value="{{inmueble.cantidad_estacionamientos}}">
@@ -49,7 +49,7 @@
                 </div>
             </div>
         
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="mb-3">
                     <select class="form-select" required name="tipo_inmueble">
                         <option value>Selecciona un tipo</option>
@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <select class="form-select" required name="region_cod" id="region_cod">
+                    <select class="form-select" name="region_cod" id="region_cod">
                         <option value>Selecciona una Región</option>
                         {% for region in regiones %}
                             <option value="{{ region.cod }}"

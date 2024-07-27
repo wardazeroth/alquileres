@@ -30,51 +30,51 @@
 
 
 		<!-- Header -->
-			<div id="header">
+		<div id="header">
         {%block header%}
-        <nav class="fixed-top navbar navbar-expand-lg navbar-dark">
-		<div class="container-fluid">
-		<a class="navbar-brand text-light" href="#">ALQUILERES</a>
-		<button class="navbar-toggler" style="margin-right: 4rem;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-			<li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="/" onclick="loadContent(event, '/')">Inicio</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#" onclick="loadContent(event, '{% url 'profile' %}')">Mis Datos</a>
-			</li>
-			{%if user.usuario.rol == 'arrendador' or user.is_staff%}
-			<li class="nav-item">
-				<a class="nav-link" href="#" onclick="loadContent(event, '{% url 'nuevo_inmueble' %}')">Crear propiedad</a>
-				</li>
-			{%endif%}
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				Dropdown
-				</a>
-				<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">Action</a></li>
-				<li><a class="dropdown-item" href="#">Another action</a></li>
-				<li><hr class="dropdown-divider"></li>
-				<li><a class="dropdown-item" href="#">Something else here</a></li>
+			<nav class="fixed-top navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+			<div class="container-fluid">
+			<a class="navbar-brand text-light" href="#">ALQUILERES</a>
+			<button class="navbar-toggler" style="margin-right: 4rem;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="/">Inicio</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'profile' %}">Mis Datos</a>
+					</li>
+					{%if user.usuario.rol == 'arrendador' or user.is_staff%}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'nuevo_inmueble' %}">Crear propiedad</a>
+					</li>
+				{%endif%}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Dropdown
+					</a>
+					<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="#">Action</a></li>
+					<li><a class="dropdown-item" href="#">Another action</a></li>
+					<li><hr class="dropdown-divider"></li>
+					<li><a class="dropdown-item" href="#">Something else here</a></li>
+					</ul>
 				</ul>
-			</ul>
-			{% if user.is_authenticated %}
-			<form class="d-flex" role="search" method="post" action="{% url 'logout' %}">
-			<label for="#" class="text-light m-2">Hola {{user.first_name}} {{user.last_name}}</label>
-			{% csrf_token %}
-			<button class="btn btn-outline-warning" type="submit">Salir</button>
-			</form>
-			{% endif %}
-		</div>
+				{% if user.is_authenticated %}
+				<form class="d-flex mb-2 mt-1" role="search" method="post" action="{% url 'logout' %}">
+				<label for="#" class="text-light m-2">Hola {{user.first_name}} {{user.last_name}}</label>
+				{% csrf_token %}
+				<button class="btn btn-outline-warning" type="submit">Salir</button>
+				</form>
+				{% endif %}
+			</div>
 		</div>
 	</nav> 
 				<span class="logo icon fa-paper-plane"></span>
 				<h1>ALQUILERES EN CHILE</h1>
-			</div>
+		</div>
     {%endblock%}
     {%if messages%}
     {%for message in messages%}
@@ -92,6 +92,7 @@
 	</div>       
 
 		<!-- Main -->
+		
 			<div id="main">
 				<header class="major" style="padding-left: 2rem; padding-right: 2rem;">
 					<div id="profile-section">				
@@ -100,7 +101,6 @@
 						{%endblock%}  
 					</div>
 				</header>
-
 			</div>
 
 		<!-- Footer -->
@@ -168,46 +168,30 @@
 
 </body>
 </html>
+
 {%block js%}
+
+
+
 <script>
+
+
+function bajar(){
+	console.log('bajanding ...');
+	const profile = document.getElementById('profile-section')
+	const pixeles = profile.offsetTop * 10
 	setTimeout(function () {
-		$('.fade').fadeOut(1000);
-	}, 3000);
+		window.scrollTo({
+			left: 0,
+			top: pixeles,
+			behaviour: 'smooth'
+		})
+	}, 300)
+	
+}
+document.addEventListener('DOMContentLoaded', bajar)
 </script>
-<script>
-	function loadContent(event, url) {
-			event.preventDefault();
-			fetch(url)
-			.then(response => response.text())
-			.then(data => {
-				// Crear un contenedor temporal para manipular el HTML cargado
-				const tempDiv = document.createElement('div');
-				tempDiv.innerHTML = data;
-				// Extraer el contenido del div con id 'main-content' del HTML cargado
-				const newContent = tempDiv.querySelector('#profile-section').innerHTML;
-				// Reemplazar el contenido actual del div 'profile-section' en la página
-				document.getElementById('profile-section').innerHTML = newContent;
-				// Desplazar suavemente hacia el contenido recién cargado
-				document.querySelector('#profile-section').scrollIntoView({ behavior: 'smooth' });
-				// Añadir event listeners a enlaces internos dentro del nuevo contenido
-				addLinkEventListeners();
-			});
-		}
 
-		function addLinkEventListeners() {
-	// Seleccionar todos los enlaces dentro del #profile-section
-	const links = document.querySelectorAll('#profile-section a');
-	links.forEach(link => {
-		link.addEventListener('click', function(event) {
-			const href = this.getAttribute('href');
-			if (href && href.startsWith('/')) { // Solo manejar enlaces internos
-				loadContent(event, href);
-			}
-		});
-	});
-	}
 
-	// Añadir event listeners a los enlaces iniciales
-	document.addEventListener('DOMContentLoaded', addLinkEventListeners);
-	</script>
 {%endblock%}
+

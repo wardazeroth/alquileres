@@ -6,15 +6,15 @@
             <div>
                 <h3 class="text-center" style="margin-top: 2rem;">
                 {%if user.usuario.rol == 'arrendador' %}
-                Tus Propiedades
+                <!-- Tus Propiedades -->
                 {% elif user.usuario.rol == 'arrendatario' %}
                 Propiedades Solicitadas
                 {%else%}
-                Todas
+                <!-- Todas -->
                 {%endif%}    
             </h3>
             <div class="row">
-                <div class="col-4">
+                <div class="col-md-4">
                     <h3>Filtra las propiedades</h3>
                     <form action="/" method="get">
                         {% csrf_token%}
@@ -51,7 +51,7 @@
                 <input type="submit" value="Buscar" class="btn btn-success"> 
                 </form>                   
             </div>
-            <div class="col-8">
+            <div class="col-md-8">
 
                 {%for inmueble in inmuebles%}
                 <div class="card mt-3">
@@ -62,7 +62,7 @@
                         <p class="card-text">{{ inmueble.descripcion }}</p>
                       </div>
                       <div class="col-4">
-                        <a href="{{ inmueble.id}} " class="btn btn-primary">Ver detalle</a>
+                        <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-primary">Ver detalle</a>
                       </div>
                     </div>
                   </div>
@@ -74,50 +74,44 @@
         </div>
  
     {%endif%}
- 
-{% endblock %}
+    {%endblock%}
+
 {%block js%}
+
+
+
 <script>
-    setTimeout(function () {
-        $('.fade').fadeOut(1000);
-    }, 3000);
-</script>
-<script>
-    function loadContent(event, url) {
-        event.preventDefault();
-        fetch(url)
-        .then(response => response.text())
-        .then(data => {
-            // Crear un contenedor temporal para manipular el HTML cargado
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = data;
-            // Extraer el contenido del div con id 'main-content' del HTML cargado
-            const newContent = tempDiv.querySelector('#profile-section').innerHTML;
-            // Reemplazar el contenido actual del div 'profile-section' en la página
-            document.getElementById('profile-section').innerHTML = newContent;
-            // Desplazar suavemente hacia el contenido recién cargado
-            document.querySelector('#profile-section').scrollIntoView({ behavior: 'smooth' });
-            // Añadir event listeners a enlaces internos dentro del nuevo contenido
-            addLinkEventListeners();
-        });
+    function filtrar_comunas() {
+        //recuperamos el valor seleccionado de la region
+        const cod_seleccionado = $(this).val()
+        //ahora iteramos sobre todas las comunas , y mostramos sólo aquellas cuyo código tenga como prefijo el código de la región seleccionada
+        $('#comuna_cod option').each(function(){
+            const comuna = $(this)
+            const cod_comuna = comuna.val()
+            if (cod_seleccionado == cod_comuna.substring(0, 2)) {
+                //La comuna es parte de la región
+                comuna.show()
+            }else{
+                comuna.hide()
+            }
+        })
     }
-
-    function addLinkEventListeners() {
-// Seleccionar todos los enlaces dentro del #profile-section
-        const links = document.querySelectorAll('#profile-section a');
-        links.forEach(link => {
-            link.addEventListener('click', function(event) {
-                const href = this.getAttribute('href');
-                if (href && href.startsWith('/')) { // Solo manejar enlaces internos
-                    loadContent(event, href);
-                }
-            });
-        });
-        }
-
-        // Añadir event listeners a los enlaces iniciales
-        document.addEventListener('DOMContentLoaded', addLinkEventListeners);
+    $('#region_cod').on('change', filtrar_comunas)
 </script>
+<!-- <script>
+	function filtrar_comunas() {
+		const cod_seleccionado = this.value;
+		const comunas = document.querySelectorAll('#comuna_cod option');
+		comunas.forEach(function(comuna) {
+			const cod_comuna = comuna.value;
+			if (cod_seleccionado === cod_comuna.substring(0, 2)) {
+				comuna.style.display = '';
+			} else {
+				comuna.style.display = 'none';
+			}
+		});
+	}
+</script> -->
 {%endblock%}
 
 

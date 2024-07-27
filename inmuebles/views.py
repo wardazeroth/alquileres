@@ -30,7 +30,7 @@ def nuevo_inmueble(req):
 def crear_inmueble(req):
     #obtener el rut del propietario
     propietario_rut = req.user.username
-    comuna=Comuna.objects.get(nombre=comuna)
+
     crear_inmueble_service(
         req.POST['nombre'], 
         req.POST['descripcion'], 
@@ -94,11 +94,8 @@ def eliminar_inmueble(req, id):
     return redirect('/accounts/profile')
 
 def detalleInmueble(req, id):
-    mis_inmuebles = Inmueble.objects.all()
-    id= int(id)
-    for i in mis_inmuebles:
-        if i.id == id:
-            inmueble_hallado = i
+    inmueble_hallado = Inmueble.objects.get(id=id)
+
     context = {
         'inmueble_hallado': inmueble_hallado
     }

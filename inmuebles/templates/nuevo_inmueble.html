@@ -2,10 +2,10 @@
 
 {%block content%}
     <h3 class="text-center">Crear una nueva propiedad</h3>
-    <form action="/inmuebles/crear/" method="post">
+    <form action="{% url 'crear_inmueble' %}" method="post">
         {% csrf_token %}
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-4">
 
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre:</label>
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="col-4 p-3">
+            <div class="col-md-4 p-3">
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Cantidad de Estacionamientos</label>
                     <input min="0" value="0" name="cantidad_estacionamientos" type="number" class="form-control" id="m2_totales" required placeholder="cantidad de estacionamientos">
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="col-4 p-3">
+            <div class="col-md-4 p-3">
                 <div class="mb-3">
                     <select class="form-select" required name="tipo_inmueble">
                         <option value>Selecciona un tipo</option>
@@ -67,7 +67,7 @@
 
                 <div class="mb-3">
                     <select class="form-select" required name="region_cod" id="region_cod">
-                        <option value>Selecciona una Región</option>
+                        <option value="">Selecciona una Región</option>
                         {% for region in regiones %}
                           <option value="{{ region.cod }}">{{ region.nombre }}</option>
                         {% endfor %}
@@ -76,7 +76,7 @@
                 
                 <div class="mb-3">
                     <select class="form-select" required name="comuna_cod" id="comuna_cod">
-                        <option value>Selecciona una Comuna</option>
+                        <option value="">Selecciona una Comuna</option>
                         {% for comuna in comunas %}
                           <option value="{{ comuna.cod }}">{{ comuna.nombre }}</option>
                         {% endfor %}
@@ -109,4 +109,5 @@
     }
     $('#region_cod').on('change', filtrar_comunas)
 </script>
+
 {%endblock%}

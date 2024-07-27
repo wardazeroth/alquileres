@@ -2178,7 +2178,7 @@ input, select, textarea {
 			-webkit-transition: opacity 0.25s ease-in-out;
 			-ms-transition: opacity 0.25s ease-in-out;
 			transition: opacity 0.25s ease-in-out;
-			background-image: url("images/overlay.png");
+			background-image: url("images/renta-casas.jpg");
 			content: '';
 			display: block;
 			height: 100%;
@@ -3022,7 +3022,7 @@ input, select, textarea {
 
 			#header {
 				background-attachment: scroll,							scroll,							scroll;
-				background-image: url("images/top-1600.svg"), url("images/overlay.png"), url("../../images/renta-casas.jpg");
+				background-image: url("images/top-1600.svg"), url("images/overlay.png"), url("images/renta-casas.jpg");
 				background-size: 1600px 230px,					auto,							cover;
 				padding: 6em 0 12em 0;
 			}
@@ -3174,7 +3174,7 @@ input, select, textarea {
 		/* Header */
 
 			#header {
-				background-image: url("images/top-1280.svg"), url("../../images/renta-casas.jpg");
+				background-image: url("images/top-1280.svg"), url("images/overlay.png"), url("images/renta-casas.jpg");
 				background-size: 1280px 184px,						auto,							cover;
 				padding: 3em 0 7em 0;
 			}
@@ -3306,6 +3306,10 @@ input, select, textarea {
 		font-family: "Cabin", sans-serif;
 		font-optical-sizing: auto;
 		font-weight: 400;
-		font-style: normal;;
+		font-style: normal;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 1000;
 	}
-	
+

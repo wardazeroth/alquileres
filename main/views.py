@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from main.services import editar_user_sin_password, change_pass
 from main.models import Comuna, Region, Inmueble
+from django.db.models import Q
 
 # Create your views here.
 @login_required
@@ -28,22 +29,42 @@ def indexView(req):
     return render(req, 'index.html', context)
 
 def filtrar_inmuebles(region_cod, comuna_cod, palabra):
-    
+    filtro_palabra = None
+    if palabra != '':
+        filtro_palabra = Q(nombre__icontains=palabra) | Q (descripcion__icontains=palabra)
+        
+    filtro_ubicacion = None
     #Caso 1: comuna_cod != ''
     if comuna_cod != '':
         comuna = Comuna.objects.get(cod=comuna_cod)
-        return Inmueble.objects.filter(comuna=comuna)
-    #Caso 2: comuna_cod == '' and region_cod != ''
-    elif comuna_cod == '' and region_cod != '':
+        filtro_ubicacion = Q(comuna=comuna)
+    elif region_cod != '':
         region = Region.objects.get(cod=region_cod)
-        comunas = Comuna.objects.filter(region=region)
-        return Inmueble.objects.filter(comuna__in=comunas)
-    #Caso 3: comuna_cod == '' and region_cod == ''
-    else:
+        comunas_region = region.comunas.all()
+        filtro_ubicacion = Q(comuna__in=comunas_region)
+        
+    if filtro_ubicacion is None and filtro_palabra is None:
+        return Inmueble.objects.all()
+    elif filtro_ubicacion is not None and filtro_palabra is None:
+        return Inmueble.objects.filter(filtro_ubicacion)
+    elif filtro_ubicacion is None and filtro_palabra is not None:
+        return Inmueble.objects.filter(filtro_palabra)
+    elif filtro_ubicacion is not None and filtro_palabra is not None:
+        return Inmueble.objects.filter(filtro_palabra & filtro_ubicacion)
+    return []
+    
+    #  #Caso 2: comuna_cod == '' and region_cod != ''
+    
+    # elif comuna_cod == '' and region_cod != '':
+    #     region = Region.objects.get(cod=region_cod)
+    #     comunas = Comuna.objects.filter(region=region)
+    #     return Inmueble.objects.filter(comuna__in=comunas)
+    # #Caso 3: comuna_cod == '' and region_cod == ''
+    # else:
     
     
-        inmuebles = Inmueble.objects.all()
-        return inmuebles
+    #     inmuebles = Inmueble.objects.all()
+    #     return inmuebles
 
 @login_required
 def profile(req):
