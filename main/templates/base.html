@@ -52,7 +52,7 @@
 					</li>
 				{%endif%}
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<!-- <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 					Dropdown
 					</a>
 					<ul class="dropdown-menu">
@@ -60,7 +60,7 @@
 					<li><a class="dropdown-item" href="#">Another action</a></li>
 					<li><hr class="dropdown-divider"></li>
 					<li><a class="dropdown-item" href="#">Something else here</a></li>
-					</ul>
+					</ul> -->
 				</ul>
 				{% if user.is_authenticated %}
 				<form class="d-flex mb-2 mt-1" role="search" method="post" action="{% url 'logout' %}">
@@ -170,28 +170,23 @@
 </html>
 
 {%block js%}
-
-
-
 <script>
-
-
+// Function to handle scrolling
 function bajar(){
-	console.log('bajanding ...');
-	const profile = document.getElementById('profile-section')
-	const pixeles = profile.offsetTop * 10
-	setTimeout(function () {
-		window.scrollTo({
-			left: 0,
-			top: pixeles,
-			behaviour: 'smooth'
-		})
-	}, 300)
-	
+  console.log('bajanding ...');
+  const profile = document.getElementById('profile-section');
+  const pixeles = profile.offsetTop * 8;
+  setTimeout(function () {
+	window.scrollTo({
+	  left: 0,
+	  top: pixeles,
+	  behavior: 'smooth'
+	});
+  }, 300);
 }
 document.addEventListener('DOMContentLoaded', bajar)
-</script>
-
+  </script>
 
 {%endblock%}
+
 

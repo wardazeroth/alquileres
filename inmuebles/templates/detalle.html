@@ -18,19 +18,43 @@
     <h1 class="text-center" >{{inmueble_hallado.nombre}}</h1>
     <div class="container">
       <div class="row">
-        <div class="col-6">             
+        <div class="col-md-6">             
             <div style="width: 28rem; margin-top: 5rem;">
                 <img src="{% static 'css/images/generica.jpg' %}" class="card-img-top" alt="...">
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
             
             <ul>
                 <li class="list-group-item">
                     <h2>{{inmueble_hallado.descripcion}}</h2>                
                 </li>
+                <li class="list-group-item mt-5">
+                    <h2>{{inmueble_hallado.direccion}}</h2>                
+                </li>
+                <li class="list-group-item">
+                    <h2>{{inmueble_hallado.comuna.nombre}}, Región {{inmueble_hallado.comuna.region.nombre}}</h2>                
+                </li>
+                <li class="list-group-item mt-5">
+                    <h2>{{inmueble_hallado.tipo_inmueble}}</h2>                
+                </li>
                 <li class="list-group-item mt-3">
                     <h2>${{inmueble_hallado.precio}}</h2>                
+                </li>
+                <li class="list-group-item mt-3">
+                    <h2>Área construída: {{inmueble_hallado.m2_construidos}} m^2</h2>                
+                </li>
+                <li class="list-group-item mt-3">
+                    <h2>Terreno: {{inmueble_hallado.precio}} m^2</h2>                
+                </li>
+                <li class="list-group-item mt-3">
+                    <h2>Estacionamientos: {{inmueble_hallado.cantidad_estacionamientos}}</h2>                
+                </li>
+                <li class="list-group-item mt-3">
+                    <h2>Habitaciones: {{inmueble_hallado.cantidad_habitaciones}}</h2>                
+                </li>
+                <li class="list-group-item mt-3">
+                    <h2>Baños: {{inmueble_hallado.cantidad_baños}}</h2>                
                 </li>
             </ul>
         </div>

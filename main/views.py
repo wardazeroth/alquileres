@@ -16,19 +16,23 @@ def indexView(req):
     datos= req.GET
     region_cod = datos.get('region_cod', '')
     comuna_cod = datos.get('comuna_cod', '')
+    t_inmueble = datos.get('tipo_inmueble', '')
     palabra = datos.get('palabra', '')
+    t_inmueble=t_inmueble.lower()
     user = req.user
-    inmuebles = filtrar_inmuebles(region_cod, comuna_cod, palabra)
+    inmuebles = filtrar_inmuebles(region_cod, comuna_cod, palabra, t_inmueble)
     comunas= Comuna.objects.all()
     regiones = Region.objects.all()
+    tipo_inmueble = Inmueble.tipos
     context = {
         'comunas': comunas,
         'regiones': regiones,
-        'inmuebles': inmuebles
+        'inmuebles': inmuebles,
+        'tipo_inmueble': tipo_inmueble
     }
     return render(req, 'index.html', context)
 
-def filtrar_inmuebles(region_cod, comuna_cod, palabra):
+def filtrar_inmuebles(region_cod, comuna_cod, palabra, t_inmueble):
     filtro_palabra = None
     if palabra != '':
         filtro_palabra = Q(nombre__icontains=palabra) | Q (descripcion__icontains=palabra)
@@ -42,15 +46,27 @@ def filtrar_inmuebles(region_cod, comuna_cod, palabra):
         region = Region.objects.get(cod=region_cod)
         comunas_region = region.comunas.all()
         filtro_ubicacion = Q(comuna__in=comunas_region)
-        
-    if filtro_ubicacion is None and filtro_palabra is None:
+    
+    filtro_tipo = None
+    if t_inmueble != '':
+        filtro_tipo = Q(tipo_inmueble = t_inmueble)
+
+    if filtro_ubicacion is None and filtro_palabra is None and filtro_tipo is None:
         return Inmueble.objects.all()
-    elif filtro_ubicacion is not None and filtro_palabra is None:
+    elif filtro_ubicacion is not None and filtro_palabra is None and filtro_tipo is None:
         return Inmueble.objects.filter(filtro_ubicacion)
-    elif filtro_ubicacion is None and filtro_palabra is not None:
+    elif filtro_ubicacion is None and filtro_palabra is not None and filtro_tipo is None:
         return Inmueble.objects.filter(filtro_palabra)
-    elif filtro_ubicacion is not None and filtro_palabra is not None:
+    elif filtro_ubicacion is not None and filtro_palabra is not None and filtro_tipo is None:
         return Inmueble.objects.filter(filtro_palabra & filtro_ubicacion)
+    elif filtro_ubicacion is None and filtro_palabra is None and filtro_tipo is not None:
+        return Inmueble.objects.filter(filtro_tipo)
+    elif filtro_ubicacion is None and filtro_palabra is not None and filtro_tipo is not None:
+        return Inmueble.objects.filter(filtro_palabra & filtro_tipo)
+    elif filtro_ubicacion is not None and filtro_palabra is not None and filtro_tipo is not None:
+        return Inmueble.objects.filter(filtro_palabra & filtro_ubicacion & filtro_tipo)
+    elif filtro_ubicacion is not None and filtro_palabra is None and filtro_tipo is not None:
+        return Inmueble.objects.filter(filtro_ubicacion & filtro_tipo)
     return []
     
     #  #Caso 2: comuna_cod == '' and region_cod != ''
