@@ -151,7 +151,7 @@
                 <div class="d-flex justify-content-between">
                   <span>${{inmueble.precio}} por mes</span>
 
-                  <a href="{% url 'editar_inmueble' id=inmueble.id %}" onclick="loadContent(event, this.getAttribute('href'))" class="p-1">
+                  <a href="{% url 'editar_inmueble' id=inmueble.id %}" class="p-1">
                     <i class="bi bi-pencil"></i>
                   </a>
                   <a href="{% url 'eliminar_inmueble' id=inmueble.id %}" class="p-1 text-danger"

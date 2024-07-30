@@ -5,25 +5,28 @@ from django.db.models import Q
 from django.contrib import messages
 from django.db import connection
 
-def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario_rut):
+def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario_rut,imagen1= None, imagen2= None, imagen3= None):
     
     propietario = User.objects.get(username=propietario_rut)
     comuna=Comuna.objects.get(cod=comuna_cod)
     
     Inmueble.objects.create(nombre=nombre,
-                  descripcion=descripcion,
-                  m2_construidos= m2_construidos,
-                  m2_totales_terreno=m2_totales_terreno,
-                  cantidad_estacionamientos=cantidad_estacionamientos,
-                  cantidad_habitaciones=cantidad_habitaciones,
-                  cantidad_baños=cantidad_baños,
-                  precio=precio,
-                  direccion=direccion,
-                  tipo_inmueble=tipo_inmueble,
-                  comuna=comuna,
-                  propietario=propietario)
+                descripcion=descripcion,
+                m2_construidos= m2_construidos,
+                m2_totales_terreno=m2_totales_terreno,
+                cantidad_estacionamientos=cantidad_estacionamientos,
+                cantidad_habitaciones=cantidad_habitaciones,
+                cantidad_baños=cantidad_baños,
+                precio=precio,
+                direccion=direccion,
+                tipo_inmueble=tipo_inmueble,
+                comuna=comuna,
+                propietario=propietario,
+                imagen1=imagen1,
+                imagen2=imagen2,
+                imagen3=imagen3,)
 
-def editar_inmueble(inmueble_id, nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario):
+def editar_inmueble(inmueble_id, nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario, imagen1, imagen2, imagen3):
     propietario = User.objects.get(username=propietario)
     comuna=Comuna.objects.get(cod=comuna_cod)
     inmueble = Inmueble.objects.get(id=inmueble_id)
@@ -39,6 +42,12 @@ def editar_inmueble(inmueble_id, nombre, descripcion, m2_construidos, m2_totales
     inmueble.tipo_inmueble=tipo_inmueble
     inmueble.comuna=comuna
     inmueble.propietario=propietario
+    if imagen1 is not None:
+        inmueble.imagen1= imagen1
+    if imagen2 is not None:
+        inmueble.imagen2=imagen2
+    if imagen3 is not None:
+        inmueble.imagen3= imagen3
     inmueble.save()
 
 def eliminar_inmueble(inmueble_id):

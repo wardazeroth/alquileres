@@ -85,6 +85,7 @@ def filtrar_inmuebles(region_cod, comuna_cod, palabra, t_inmueble):
 @login_required
 def profile(req):
     user = req.user
+
     mis_inmuebles= None
     if user.usuario.rol == 'arrendador':
         mis_inmuebles= user.inmuebles.all()

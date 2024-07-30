@@ -171,7 +171,7 @@
 
 {%block js%}
 <script>
-// Function to handle scrolling
+	// Function to handle scrolling
 function bajar(){
   console.log('bajanding ...');
   const profile = document.getElementById('profile-section');
@@ -184,7 +184,61 @@ function bajar(){
 	});
   }, 300);
 }
-document.addEventListener('DOMContentLoaded', bajar)
+	// 	setTimeout(function () {
+	// 	$('.fade').fadeOut(1500);
+	// }, 3000);
+	// $(document).ready(function() {
+	//   // Function to filter comunas
+
+	//   // Function to handle scrolling
+	//   function bajar() {
+	// 	const profile = document.getElementById('profile-section');
+	// 	if (profile) {
+	// 	  const pixeles = profile.offsetTop * 8;
+	// 	  setTimeout(function () {
+	// 		window.scrollTo({
+	// 		  left: 0,
+	// 		  top: pixeles,
+	// 		  behavior: 'smooth'
+	// 		});
+	// 	  }, 300); // Ensure enough time for rendering
+	// 	}
+	//   }
+	//   function filtrar_comunas() {
+	// 	const cod_seleccionado = $(this).val();
+	// 	$('#comuna_cod option').each(function(){
+	// 	  const comuna = $(this);
+	// 	  const cod_comuna = comuna.val();
+	// 	  if (cod_seleccionado == cod_comuna.substring(0, 2)) {
+	// 		comuna.show();
+	// 	  } else {
+	// 		comuna.hide();
+	// 	  }
+	// 	});
+	//   }
+  
+	//   // Attach event for region_cod change
+	//   $(document).on('change', '#region_cod', filtrar_comunas);
+  
+	//   // Attach event to navbar links
+	//   $(document).on('click', '#navbarSupportedContent a', function(e) {
+	// 	e.preventDefault();
+	// 	const url = $(this).attr('href');
+  
+	// 	$.get(url, function(data) {
+	// 	  // Update #profile-section with new content
+	// 	  $('#profile-section').html($(data).find('#profile-section').html());
+  
+	// 	  // Ensure the content is fully rendered before scrolling
+	// 	  setTimeout(function() {
+	// 		bajar(); // Scroll down after content is loaded
+	// 	  }, 300); // Adjust delay if needed
+	// 	});
+	//   });
+  
+	//   // Initial scroll down if needed
+	//   bajar();
+	// });
   </script>
 
 {%endblock%}

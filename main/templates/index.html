@@ -73,14 +73,51 @@
                             <div class="card mt-3">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-8">
-                                            <h5 class="card-title">{{ inmueble.nombre }}</h5>
-                                            <p class="card-text">{{ inmueble.descripcion }}</p>
-                                        </div>
-                                        <div class="col-4">
-                                            <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-primary">Ver detalle</a>                   
-                                            <h4 class="card-text mt-5">{{ inmueble.tipo_inmueble }}</h4>
-                                        </div>                        
+                                        {%if inmueble.imagen1 or inmueble.imagen2 or inmueble.imagen3 %}
+                                            <div class="col-4">
+                                                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                                                <div id="carouselExample" class="carousel slide carousel-fade">
+                                    
+                                                    <div class="carousel-inner">
+                                                    <div class="carousel-item active" data-bs-interval="2000">
+                                                        <img src="{{ inmueble.imagen1}}" class="d-block w-100" alt="carou1">
+                                                    </div>
+                                                    <div class="carousel-item" data-bs-interval="2000">
+                                                        <img src="{{ inmueble.imagen2 }}" class="d-block w-100" alt="carou2">
+                                                    </div>
+                                                    <div class="carousel-item" data-bs-interval="2000">
+                                                        <img src="{{ inmueble.imagen3 }}" class="d-block w-100" alt="carou3">
+                                                    </div>
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <h5 class="card-title">{{ inmueble.nombre }}</h5>
+                                                <p class="card-text">{{ inmueble.descripcion }}</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-primary">Ver detalle</a>                   
+                                                <h4 class="card-text mt-5">{{ inmueble.tipo_inmueble }}</h4>
+                                            </div>
+                                        {%else%}
+                                            <div class="col-8">
+                                                <h5 class="card-title">{{ inmueble.nombre }}</h5>
+                                                <p class="card-text">{{ inmueble.descripcion }}</p>
+                                            </div>
+                                            <div class="col-4">
+                                                <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-primary">Ver detalle</a>                   
+                                                <h4 class="card-text mt-5">{{ inmueble.tipo_inmueble }}</h4>
+                                            </div>
+                                        {%endif%}                        
                                     </div>                                                     
                                 </div>
                             </div>

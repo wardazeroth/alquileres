@@ -43,7 +43,10 @@ def crear_inmueble(req):
         req.POST['direccion'], 
         req.POST['tipo_inmueble'], 
         req.POST['comuna_cod'], 
-        propietario_rut)
+        propietario_rut,
+        req.POST['imagen1'],
+        req.POST['imagen2'],
+        req.POST['imagen3'],)
 
     messages.success(req, '¡La propiedad se creó exitosamente!')
     return redirect('/')
@@ -76,12 +79,15 @@ def editar_inmueble(req, id):
         int(req.POST['m2_totales_terreno']), 
         int(req.POST['cantidad_estacionamientos']), 
         int(req.POST['cantidad_habitaciones']), 
-        int(req.POST['cantidad_baños']), 
+        int(req.POST['cantidad_baños']),
         int(req.POST['precio']), 
         req.POST['direccion'], 
         req.POST['tipo_inmueble'], 
         req.POST['comuna_cod'], 
-        propietario)
+        propietario,
+        req.POST['imagen1'],
+        req.POST['imagen2'],
+        req.POST['imagen3'],)
 
     messages.success(req, '¡Inmueble actualizado con éxito!')
     return redirect('/')
