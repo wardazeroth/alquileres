@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.db import connection
 
-def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario_rut,imagen1= None, imagen2= None, imagen3= None):
+def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales_terreno, cantidad_estacionamientos, cantidad_habitaciones, cantidad_baños, precio, direccion, tipo_inmueble, comuna_cod, propietario_rut,imagen1, imagen2, imagen3):
     
     propietario = User.objects.get(username=propietario_rut)
     comuna=Comuna.objects.get(cod=comuna_cod)

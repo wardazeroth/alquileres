@@ -2,6 +2,7 @@
 {%load static%}
     {%block content%}
         {%if user.is_authenticated %}
+        <div style="background-color: rgb(193, 232, 252); padding-top: 5rem;">
             <h1>Bienvenido, {{user.first_name}} {{user.last_name}}</h1>
             <div>
                 <h3 class="text-center" style="margin-top: 2rem;">
@@ -12,135 +13,148 @@
                 {%else%}
                 <!-- Todas -->
                 {%endif%}    
-            </h3>
-            <div class="row">
-                <div class="col-1">
-                </div>
-                <div class="col-md-3">
-                        <h3>Filtra las propiedades</h3>
-                        <form action="/" method="get">
-                            {% csrf_token%}
-                            <div class="mb-3">
-                                <label for="region_cod" class="form-label">Región</label>
-                                <select name="region_cod" id="region_cod" class="form-select">
-                                    <option value="">Selecciona una región</option>
-                                    {%for region in regiones%}
-                                        <option value="{{ region.cod }}">{{ region.nombre }}</option>
-                                    {%endfor%}
-                                    
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="comuna_cod" class="form-label">Comuna</label>
-                                <select name="comuna_cod" id="comuna_cod" class="form-select">
-                                    <option value="">Selecciona una comuna</option>
-                                    {%for comuna in comunas%}
-                                        <option value="{{ comuna.cod }}">{{ comuna.nombre }}</option>
-                                    {%endfor%}
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="tipo_inmueble" class="form-label">Tipo de inmueble</label>
-                                    <select class="form-select" name="tipo_inmueble" id="tipo_inmueble">
-                                        <option value="">Selecciona un tipo</option>
-                                        {% for tipo in tipo_inmueble %}
-                                        <option value="{{ tipo.0 }}">{{ tipo.1 }}</option>
-                                        {% endfor %}
-                                    </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="palabra" class="form-label">Palabra</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="palabra"
-                                    id="palabra"
-                                />
-                            </div>
-
-                    <input type="submit" value="Buscar" class="btn btn-success"> 
-                    </form>  
-                    <div style="width: 28rem; margin-top: 5rem;">
-                        <img src="{% static 'css/images/casallaves.png' %}" class="card-img-top" alt="...">
+                </h3>
+                <div class="row">
+                    <div class="col-1">
                     </div>
-                </div>
-                <div class="col-1">
-                </div>
-            
-                <div class="col-md-6">
-                    {% if inmuebles %}
-                        {%for inmueble in inmuebles%}
-                            <div class="card mt-3">
-                                <div class="card-body">
-                                    <div class="row">
-                                        {%if inmueble.imagen1 or inmueble.imagen2 or inmueble.imagen3 %}
-                                            <div class="col-4">
-                                                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                                                <div id="carouselExample" class="carousel slide carousel-fade">
-                                    
-                                                    <div class="carousel-inner">
-                                                    <div class="carousel-item active" data-bs-interval="2000">
-                                                        <img src="{{ inmueble.imagen1}}" class="d-block w-100" alt="carou1">
+                    <div class="col-md-3">
+                            <h3>Filtra las propiedades</h3>
+                            <form action="/" method="get">
+                                {% csrf_token%}
+                                <div class="mb-3">
+                                    <label for="region_cod" class="form-label">Región</label>
+                                    <select name="region_cod" id="region_cod" class="form-select">
+                                        <option value="">Selecciona una región</option>
+                                        {%for region in regiones%}
+                                            <option value="{{ region.cod }}">{{ region.nombre }}</option>
+                                        {%endfor%}
+                                        
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="comuna_cod" class="form-label">Comuna</label>
+                                    <select name="comuna_cod" id="comuna_cod" class="form-select">
+                                        <option value="">Selecciona una comuna</option>
+                                        {%for comuna in comunas%}
+                                            <option value="{{ comuna.cod }}">{{ comuna.nombre }}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tipo_inmueble" class="form-label">Tipo de inmueble</label>
+                                        <select class="form-select" name="tipo_inmueble" id="tipo_inmueble">
+                                            <option value="">Selecciona un tipo</option>
+                                            {% for tipo in tipo_inmueble %}
+                                            <option value="{{ tipo.0 }}">{{ tipo.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="palabra" class="form-label">Palabra</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        name="palabra"
+                                        id="palabra"
+                                    />
+                                </div>
+
+                        <input type="submit" value="Buscar" class="btn btn-success"> 
+                        </form>  
+                        <div style="width: 28rem; margin-top: 5rem;">
+                            <img src="{% static 'css/images/casallaves.png' %}" class="card-img-top" alt="...">
+                        </div>
+                    </div>
+                    <div class="col-1">
+                    </div>
+                
+                    <div class="col-md-6 mb-5">
+                        {% if inmuebles %}
+                            {%for inmueble in inmuebles%}
+                                <div class="card mt-3">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {% if inmueble.imagen1 %}
+                                                <div class="col-4">
+                                                    <div>
+                                                        <img src="{{ inmueble.imagen1}}" class="d-block w-100" alt="carou1"  data-toggle="modal" data-target="#exampleModal" 
+                                                        data-img-url="{{ inmueble.imagen1 }}">
                                                     </div>
-                                                    <div class="carousel-item" data-bs-interval="2000">
-                                                        <img src="{{ inmueble.imagen2 }}" class="d-block w-100" alt="carou2">
-                                                    </div>
-                                                    <div class="carousel-item" data-bs-interval="2000">
-                                                        <img src="{{ inmueble.imagen3 }}" class="d-block w-100" alt="carou3">
-                                                    </div>
-                                                    </div>
-                                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Previous</span>
-                                                    </button>
-                                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Next</span>
-                                                    </button>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <h5 class="card-title">{{ inmueble.nombre }}</h5>
+                                                    <p class="card-text">{{ inmueble.descripcion }}</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-primary">Ver detalle</a>                   
+                                                    <h4 class="card-text mt-5">{{ inmueble.tipo_inmueble }}</h4>
+                                                </div>
+                                            {%else%}
+                                                <div class="col-8">
+                                                    <h5 class="card-title">{{ inmueble.nombre }}</h5>
+                                                    <p class="card-text">{{ inmueble.descripcion }}</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-primary">Ver detalle</a>                   
+                                                    <h4 class="card-text">{{ inmueble.tipo_inmueble }}</h4>
                                                 </div>
                                             </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <h5 class="card-title">{{ inmueble.nombre }}</h5>
-                                                <p class="card-text">{{ inmueble.descripcion }}</p>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-primary">Ver detalle</a>                   
-                                                <h4 class="card-text mt-5">{{ inmueble.tipo_inmueble }}</h4>
-                                            </div>
-                                        {%else%}
-                                            <div class="col-8">
-                                                <h5 class="card-title">{{ inmueble.nombre }}</h5>
-                                                <p class="card-text">{{ inmueble.descripcion }}</p>
-                                            </div>
-                                            <div class="col-4">
-                                                <a href="{% url 'detalle_inmueble' inmueble.id %}" class="btn btn-primary">Ver detalle</a>                   
-                                                <h4 class="card-text mt-5">{{ inmueble.tipo_inmueble }}</h4>
-                                            </div>
-                                        {%endif%}                        
-                                    </div>                                                     
+                                            {%endif%}                        
+                                        </div>                                                     
+                                    </div>
                                 </div>
+                            {%endfor%}
+                        {%else%}
+                            <h3>No hay propiedades con las características buscadas.</h3>
+                            
+                            <div style="width: 28rem; margin-top: 5rem; margin-left: 15rem;">
+                                <img src="{% static 'css/images/error.png' %}" class="card-img-top;" alt="...">
                             </div>
-                        {%endfor%}
-                    {%else%}
-                        <h3>No hay propiedades con las características buscadas.</h3>
-                        
-                        <div style="width: 28rem; margin-top: 5rem; margin-left: 15rem;">
-                            <img src="{% static 'css/images/error.png' %}" class="card-img-top" alt="...">
-                        </div>
-                    {%endif%}
-                </div>
+                        {%endif%}
+                    </div>
+            </div>
             </div>
         </div>
- 
+
+        <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">abrir modal</button>
+
     {%endif%}
-    {%endblock%}
+    <!-- The Modal
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title">Imagen del inmueble</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <!-- El contenido de la imagen se actualiza dinámicamente -->
+                <!-- <img id="modalImage" src="" class="img-fluid" alt="Imagen ampliada del inmueble">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div> --> -->
+{%endblock%}
 
 {%block js%}
 
 
-
 <script>
+    // Cuando el modal se está por abrir
+    // $('#exampleModal').on('show.bs.modal', function (event) {
+    //     // Obtenemos la imagen que lanzó el evento
+    //     var button = $(event.relatedTarget);
+    //     // Extraemos la URL de la imagen desde el atributo data-img-url
+    //     var imageUrl = button.data('img-url');
+    //     // Actualizamos el src del elemento img dentro del modal
+    //     var modal = $(this);
+    //     modal.find('#modalImage').attr('src', imageUrl);
+    // });
+
     function filtrar_comunas() {
         //recuperamos el valor seleccionado de la region
         const cod_seleccionado = $(this).val()
@@ -157,7 +171,12 @@
         })
     }
     $('#region_cod').on('change', filtrar_comunas)
-</script>
+    </script>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 {%endblock%}
 

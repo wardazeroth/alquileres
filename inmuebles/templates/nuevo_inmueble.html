@@ -1,112 +1,115 @@
 {%extends 'base.html'%}
 
 {%block content%}
-    <h3 class="text-center">Crear una nueva propiedad</h3>
-    <form action="{% url 'crear_inmueble' %}" method="post">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-3">
+    <div style="background-color: rgb(193, 232, 252);">
+        <h3 class="text-center pt-5">Crear una nueva propiedad</h3>
+        <form action="{% url 'crear_inmueble' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
 
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" class="form-control" id="nombre" required placeholder="nombre de la propiedad" name="nombre">
-                  </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" required placeholder="nombre de la propiedad" name="nombre">
+                    </div>
 
-                <div class="mb-3">
-                    <label for="descripcion" class="form-label">Descripción:</label>
-                    <textarea name="descripcion" class="form-control" id="descripcion" rows="3" required maxlength="1500" placeholder="breve descripción..."></textarea>
-                </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción:</label>
+                        <textarea name="descripcion" class="form-control" id="descripcion" rows="3" required maxlength="1500" placeholder="breve descripción..."></textarea>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Metros Construídos:</label>
-                    <input min="1" name="m2_construidos" type="number" class="form-control" id="m2_construidos" required placeholder="23 m^2">
-                </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Metros Construídos:</label>
+                        <input min="1" name="m2_construidos" type="number" class="form-control" id="m2_construidos" required placeholder="23 m^2">
+                    </div>
 
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Metros Totales:</label>
-                    <input min="1" name="m2_totales_terreno" type="number" class="form-control" id="m2_totales" required placeholder="50 m^2">
-                </div>
-                <div class="mb-3">
-                    <label for="imagen1" class="form-label">Imagen 1</label>
-                    <input name="imagen1" type="url" class="form-control" id="imagen1" placeholder="Inserte URL de la imagen 1">
-                </div>
-                <div class="mb-3">
-                    <label for="imagen2" class="form-label">Imagen 2</label>
-                    <input name="imagen2" type="url" class="form-control" id="imagen2" placeholder="Inserte URL de la imagen 2">
-                </div>
-                <div class="mb-3">
-                    <label for="imagen3" class="form-label">Imagen 3</label>
-                    <input name="imagen3" type="url" class="form-control" id="imagen3" placeholder="Inserte URL de la imagen 3">
-                </div>
-            
-            </div>
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-2">
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Cantidad de Estacionamientos</label>
-                    <input min="0" value="0" name="cantidad_estacionamientos" type="number" class="form-control" id="m2_totales" required placeholder="cantidad de estacionamientos">
-                </div>
-
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Cantidad de Habitaciones</label>
-                    <input min="0" value="0" name="cantidad_habitaciones" type="number" class="form-control" id="nro_habitaciones" required placeholder="cantidad de habitaciones">
-                </div>
-
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Cantidad de Baños</label>
-                    <input min="0" value="0" name="cantidad_baños" type="number" class="form-control" id="nro_baños" required placeholder="cantidad de baños">
-                </div>
-
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Direccion</label>
-                    <input type="text" class="form-control" id="direccion" required placeholder="Tu dirección" name="direccion">
-                </div>
-            </div>
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-3" style="margin-top: 2rem;">
-                <div class="mb-3">
-                    <select class="form-select" required name="tipo_inmueble">
-                        <option value>Selecciona un tipo</option>
-                        {% for tipo in tipos_inmueble %}
-                          <option value="{{ tipo.0 }}">{{ tipo.1 }}</option>
-                        {% endfor %}
-                      </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Precio (CLP)</label>
-                    <input min="1000" name="precio" type="number" class="form-control" id="precio" type="number" required placeholder="$250.000">
-                </div>
-
-                <div class="mb-3">
-                    <select class="form-select" required name="region_cod" id="region_cod">
-                        <option value="">Selecciona una Región</option>
-                        {% for region in regiones %}
-                          <option value="{{ region.cod }}">{{ region.nombre }}</option>
-                        {% endfor %}
-                      </select>
-                </div> 
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Metros Totales:</label>
+                        <input min="1" name="m2_totales_terreno" type="number" class="form-control" id="m2_totales" required placeholder="50 m^2">
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen1" class="form-label">Imagen 1</label>
+                        <input name="imagen1" type="url" class="form-control" id="imagen1" placeholder="Inserte URL de la imagen 1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen2" class="form-label">Imagen 2</label>
+                        <input name="imagen2" type="url" class="form-control" id="imagen2" placeholder="Inserte URL de la imagen 2">
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen3" class="form-label">Imagen 3</label>
+                        <input name="imagen3" type="url" class="form-control" id="imagen3" placeholder="Inserte URL de la imagen 3">
+                    </div>
                 
-                <div class="mb-3">
-                    <select class="form-select" required name="comuna_cod" id="comuna_cod">
-                        <option value="">Selecciona una Comuna</option>
-                        {% for comuna in comunas %}
-                          <option value="{{ comuna.cod }}">{{ comuna.nombre }}</option>
-                        {% endfor %}
-                      </select>
-                </div>    
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Cantidad de Estacionamientos</label>
+                        <input min="0" value="0" name="cantidad_estacionamientos" type="number" class="form-control" id="m2_totales" required placeholder="cantidad de estacionamientos">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Cantidad de Habitaciones</label>
+                        <input min="0" value="0" name="cantidad_habitaciones" type="number" class="form-control" id="nro_habitaciones" required placeholder="cantidad de habitaciones">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Cantidad de Baños</label>
+                        <input min="0" value="0" name="cantidad_baños" type="number" class="form-control" id="nro_baños" required placeholder="cantidad de baños">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Direccion</label>
+                        <input type="text" class="form-control" id="direccion" required placeholder="Tu dirección" name="direccion">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3" style="margin-top: 2rem;">
+                    <div class="mb-3">
+                        <select class="form-select" required name="tipo_inmueble">
+                            <option value>Selecciona un tipo</option>
+                            {% for tipo in tipos_inmueble %}
+                            <option value="{{ tipo.0 }}">{{ tipo.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Precio (CLP)</label>
+                        <input min="1000" name="precio" type="number" class="form-control" id="precio" type="number" required placeholder="$250.000">
+                    </div>
+
+                    <div class="mb-3">
+                        <select class="form-select" required name="region_cod" id="region_cod">
+                            <option value="">Selecciona una Región</option>
+                            {% for region in regiones %}
+                            <option value="{{ region.cod }}">{{ region.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div> 
+                    
+                    <div class="mb-3">
+                        <select class="form-select" required name="comuna_cod" id="comuna_cod">
+                            <option value="">Selecciona una Comuna</option>
+                            {% for comuna in comunas %}
+                            <option value="{{ comuna.cod }}">{{ comuna.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>    
+                </div>
             </div>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-success">Crear</button>
-        </div>
-        <div class="col-md-1">
-        </div>
-    </form>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success mb-5">Crear</button>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </form>
+    </div>
+
 {%endblock%}
 
 {%block js%}
